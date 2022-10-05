@@ -5,6 +5,21 @@ function onSaveClick(event){
     var hour = button.attr("data-hour");
     var textArea = button.parent().find("textarea");
     localStorage.setItem(hour, textArea.val());
+    button.removeClass("dirty");
+}
+
+function onInput(event){
+    var textArea = $(event.target);
+    var button = textArea.parent().find("button");
+    var hour = button.attr("data-hour");
+    
+    var saved = localStorage.getItem(hour);
+    if (saved != textArea.val()){
+        button.addClass("dirty");
+    }else{
+        button.removeClass("dirty");
+    }
+
 }
 
 //todo: see if there's a better way to do this, feels hacked together.
@@ -40,6 +55,7 @@ for(var i = 9; i < 18; i++){
     var textArea = $("<textarea>");
     textArea.addClass("col-10")
     textArea.addClass(timeRelation);
+    textArea.on("input",function(event){onInput(event)});
     row.append(textArea);
 
     var fromStorage = localStorage.getItem(hourFormatted);
@@ -56,5 +72,4 @@ for(var i = 9; i < 18; i++){
     row.append(saveButton);
 
     container.append(row);
-    
 }
