@@ -23,6 +23,8 @@ function getCurrentRelation(time){
     return moment().isAfter(moment(time)) ? "past" : "future";
 }
 
+$("#currentDay").text(moment().format("dddd, MMM Do")); // set the p text to current date in specific format (Tuesday, Oct 4th)
+
 for(var i = 9; i < 18; i++){
 
     var eventHour = moment(i, ["H"]); // this moment (military time) without minutes or seconds.
