@@ -1,13 +1,10 @@
 var container = $(".container");
 
-function onRowClick(event){
-    var target = $(event.target);
-    if (target.hasClass("saveBtn")){
-        var row = target.parent();
-        var hour = row.attr("data-hour");
-        var textArea = row.find("textarea");
-        localStorage.setItem(hour, textArea.val());
-    }
+function onSaveClick(event){
+    var button = $(event.target);
+    var hour = button.attr("data-hour");
+    var textArea = button.parent().find("textarea");
+    localStorage.setItem(hour, textArea.val());
 }
 
 //todo: see if there's a better way to do this, feels hacked together.
@@ -33,8 +30,6 @@ for(var i = 9; i < 18; i++){
 
     var row = $("<div>");
     row.addClass("row");
-    row.attr("data-hour", hourFormatted);
-    row.on("click", onRowClick);
 
     var hourText = $("<p>");
     hourText.addClass("col-1").addClass("text-right");
@@ -54,8 +49,10 @@ for(var i = 9; i < 18; i++){
 
     var saveButton = $("<button>");
     saveButton.addClass("col-1");
-    saveButton.addClass("saveBtn")
+    saveButton.addClass("saveBtn");
     saveButton.text("Save");
+    saveButton.attr("data-hour", hourFormatted);
+    saveButton.on("click", onSaveClick);
     row.append(saveButton);
 
     container.append(row);
