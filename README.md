@@ -33,4 +33,4 @@ THEN the saved events persist
 ```
 
 # License
-[MIT Licence](https://github.com/vicdotexe/code-quiz/blob/main/LICENSE)
+[MIT Licence](https://github.com/vicdotexe/work-day-scheduler/blob/main/LICENSE)
