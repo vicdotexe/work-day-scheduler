@@ -46,7 +46,7 @@ for(var i = 9; i < 18; i++){
     var timeRelation = getCurrentRelation(i); // a string: either "past", "present" or "future" based on what hour this row is.
 
     var row = $("<div>");
-    row.addClass("row");
+    row.addClass("row d-flex");
 
     var hourText = $("<p>");
     hourText.addClass("col-1").addClass("text-right");

@@ -58,6 +58,7 @@ textarea {
 }
 
 .saveBtn {
+  border: 1px solid black;
   border-left: 1px solid black;
   border-top-right-radius: 15px;
   border-bottom-right-radius: 15px;
@@ -66,8 +67,13 @@ textarea {
 }
 
 .saveBtn i:hover {
+  outline: none;
   font-size: 20px;
   transition: all 0.3s ease-in-out;
+}
+
+.saveBtn:focus{
+  outline: none;
 }
 
 .dirty {
