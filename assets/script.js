@@ -1,5 +1,6 @@
 var container = $(".container");
 
+// saves the textarea to local storage
 function onSaveClick(event){
     var button = $(event.target);
     var hour = button.attr("data-hour");
@@ -8,6 +9,7 @@ function onSaveClick(event){
     button.removeClass("dirty");
 }
 
+// callback for when textarea is altered
 function onInput(event){
     var textArea = $(event.target);
     var button = textArea.parent().find("button");
@@ -22,17 +24,19 @@ function onInput(event){
 
 }
 
-//todo: see if there's a better way to do this, feels hacked together.
+//todo: see if there's a cleaner way to do this, feels hacked together.
 /**
  * Returns the relation the time passed in and the current hour.
  * @param {moment} time 
  * @returns "past" "present" or "future"
  */
 function getCurrentRelation(time){
-    if (moment().isBetween(moment(time), moment(time).add(1,"hours"))){
+    console.log(time);
+    var now = moment();
+    if (now.isBetween(moment(time), moment(time).add(1,"hours")) || now.format("h") == time.format("h")){
         return "present";
     }
-    return moment().isAfter(moment(time)) ? "past" : "future";
+    return now.isAfter(moment(time)) ? "past" : "future";
 }
 
 $("#currentDay").text(moment().format("dddd, MMM Do")); // set the p text to current date in specific format (Tuesday, Oct 4th)
