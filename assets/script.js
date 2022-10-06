@@ -24,28 +24,26 @@ function onInput(event){
 
 }
 
-//todo: see if there's a cleaner way to do this, feels hacked together.
 /**
- * Returns the relation the time passed in and the current hour.
- * @param {moment} time 
+ * Gets the hour's relation to present time.
+ * @param {number} hour the hour to check
  * @returns "past" "present" or "future"
  */
-function getCurrentRelation(time){
-    console.log(time);
-    var now = moment();
-    if (now.isBetween(moment(time), moment(time).add(1,"hours")) || now.format("h") == time.format("h")){
+function getCurrentRelation(hour){
+    var now = moment().format("H");
+
+    if (hour == now){
         return "present";
     }
-    return now.isAfter(moment(time)) ? "past" : "future";
+
+    return hour < now ? "past" : "future";
 }
 
 $("#currentDay").text(moment().format("dddd, MMM Do")); // set the p text to current date in specific format (Tuesday, Oct 4th)
 
 for(var i = 9; i < 18; i++){
 
-    var eventHour = moment(i, ["H"]); // this moment (military time) without minutes or seconds.
-    var hourFormatted = eventHour.format("h A"); // a string of just the hour and AM/PM (9 AM)
-    var timeRelation = getCurrentRelation(eventHour); // a string: either "past", "present" or "future" based on what hour this row is.
+    var timeRelation = getCurrentRelation(i); // a string: either "past", "present" or "future" based on what hour this row is.
 
     var row = $("<div>");
     row.addClass("row");
@@ -53,7 +51,7 @@ for(var i = 9; i < 18; i++){
     var hourText = $("<p>");
     hourText.addClass("col-1").addClass("text-right");
     hourText.addClass("hour");
-    hourText.text(eventHour.format("h A"));
+    hourText.text(moment(i, "H").format("ha"));
     row.append(hourText);
 
     var textArea = $("<textarea>");
@@ -62,7 +60,7 @@ for(var i = 9; i < 18; i++){
     textArea.on("input",function(event){onInput(event)});
     row.append(textArea);
 
-    var fromStorage = localStorage.getItem(hourFormatted);
+    var fromStorage = localStorage.getItem(i);
     if(fromStorage){
         textArea.val(fromStorage);
     }
@@ -71,7 +69,7 @@ for(var i = 9; i < 18; i++){
     saveButton.addClass("col-1");
     saveButton.addClass("saveBtn");
     saveButton.text("Save");
-    saveButton.attr("data-hour", hourFormatted);
+    saveButton.attr("data-hour", i);
     saveButton.on("click", onSaveClick);
     row.append(saveButton);
 
